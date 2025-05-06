@@ -1,0 +1,293 @@
+* { margin: 0; padding: 0; }
+
+BODY {
+	max-width: 1024px;
+	margin: 0 auto;
+	padding: 0.7em;
+	font-family: "Georgia", "Times New Roman", "Times", serif;
+	font-size: 14px;
+	line-height: 21px;
+}
+.header {
+	margin: 0 0 0.8em 0;
+}
+.catalog_paginator {
+	margin: 0.5em 0;
+}
+.catalog_paginator A {
+	display: inline-block;
+	margin: 0 0.5em;
+	width: 3em;
+	text-align: center;
+	border: 1px solid gray;
+	text-decoration: none;
+}
+.catalog {
+	width: 100%;
+	margin: 0.5em auto;
+	border-collapse: collapse;
+}
+.catalog THEAD {
+	background-color: #C0C0C0;
+	font-size: 85%;
+	font-weight: bold;
+}
+.catalog THEAD TD {
+	white-space: nowrap;
+}
+.catalog TD {
+	vertical-align: top;
+	padding: 2px 5px;
+	border: 1px solid black;
+}
+.sort_direction {
+	line-height: 70%;
+	font-size: 130%;
+}
+.sort_active {
+	padding: 3px 6px;
+	background-color: #E8E8E8;
+	border-radius: 6px;
+}
+.catalog A {
+	text-decoration: none;
+}
+UL.catalog_authors {
+	list-style-type: none;
+}
+UL.catalog_authors LI:after {
+	content: "; ";
+}
+UL.catalog_authors LI:last-child:after {
+	content: "";
+}
+.catalog_series, .catalog_identifier {
+	font-size: 80%;
+}
+.catalog_series, .catalog_edition, .catalog_identifier {
+	color: green;
+}
+.catalog_edit {
+	text-align: center;
+}
+FORM#search_form {
+	margin: 0 0 1.1em 0;
+}
+FORM#search_form INPUT[type=text] {
+	width: 50em;
+	padding: 2px;
+}
+.search_tips {
+	margin: 4px 0 0 0;
+	line-height: 120%;
+	font-size: 80%;
+	color: gray;	
+}
+FORM .form_error {
+	padding: 2px 4px;
+	background-color: #800000;
+	color: #FFFFFF;
+	border: 1px solid #FFFFFF;
+}
+UL.inline-fields {
+	list-style-type: none;
+}
+.inline-fields, .inline-selectors {
+	clear: both;
+}
+.inline-fields LI {
+	display: block;
+	float: left;
+	margin: 0 1.5em 0 0;
+}
+.inline-fields LABEL, .inline-selectors LABEL {
+	display: inline-block;
+	width: 100%;
+	font-weight: bold;
+}
+/*.inline-fields LABEL,*/ .inline-selectors DIV {
+	display: inline-block;
+	margin: 2px 4px;
+}
+/*
+.inline-fields LABEL INPUT {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+*/
+.inline-selectors LABEL {
+	display: block;
+}
+.inline-selectors INPUT {
+	width: 3.5em;
+}
+
+.record_side {
+	width: auto;
+	float: left;
+	margin: 0 0.5em 0 0;
+}
+.record_side IMG {
+	display: block;
+	margin: 0 auto;
+	border: 1px solid gray;
+}
+.record {
+	width: auto;
+	margin: 0 0 0 0.5em;
+	padding: 0 0 0 0.5em;
+	border-left: 1px solid black;
+}
+.record A {
+	text-decoration: none;
+}
+.record TD {
+	vertical-align: top;
+}
+.record TD.field {
+	width: 120px;
+	color: gray;
+}
+.record_title {
+	font-size: 120%;
+	font-weight: bold;
+}
+UL.record_mirrors, UL.record_mirrors_compact {
+	list-style-type: none;
+}
+UL.record_mirrors_compact {
+	white-space: nowrap;
+	text-align: center;
+}
+UL.record_mirrors LI, UL.record_mirrors_compact LI {
+	display: inline-block;
+	margin: 0 0.25em;
+	white-space: nowrap;
+}
+UL.record_mirrors LI:before {
+	content: "[ ";
+}
+UL.record_mirrors LI:after {
+	content: " ]";
+}
+.hashes_header {
+	margin: 2em 0 0 0;
+	font-weight: bold;
+}
+.hashes_header, .hashes {
+	color: gray;
+	font-size: 70%;
+}
+.hashes {
+	width: 100%;
+	border-collapse: collapse;
+}
+.hashes TH, .hashes TD {
+	text-align: left;
+	vertical-align: top;
+}
+.hashes TH {
+	font-weight: normal;
+	padding: 0 0.5em 0 0;
+}
+.hashes TD, .hash {
+	font-family: "Consolas", monospace;
+	font-size: 1em;
+}
+.record_actions {
+	list-style-type: none;
+}
+.record_actions LI {
+	float: right;
+	margin: 0 3px;
+}
+.record_actions A {
+	text-decoration: none;
+	padding: 2px 5px;
+	border: 1px solid #002232;
+	box-shadow: 0 0 1px #EDF9FF inset;
+	border-radius: 5px;
+	background-color: #BBBBBB;
+	color: #000;
+}
+.record_actions A:hover {
+	color: #161616;
+	text-shadow: 1px 1px 1px #FFFFFF;
+}
+.letter_selector {
+	list-style-type: none;
+}
+.letter_selector LI {
+	display: block;
+	float: left;
+	margin: 0 2px 0 0;
+	width: 2em;
+	text-align: center;
+	border: 1px solid gray;
+}
+.letter_selector A {
+	display: block;
+	text-decoration: none;
+}
+
+/* scimag */
+.catalog H2 {
+	font-size: 120%;
+}
+DL.article_properties {
+	width: 100%;
+}
+DL.article_properties DT {
+	float: left;
+}
+DL.article_properties DT {
+	width: 5em;
+	clear: left;
+}
+DL.article_properties DD {
+	margin: 0 0 0 5em;
+}
+.journal_issues {
+	width: 100%;
+	margin: 1.2em 0 0 0;
+}
+.journal_issues THEAD TD {
+	font-weight: bold;
+}
+.journal_issues TD {
+	vertical-align: top;
+}
+.journal_issues TR TD:first-child {
+	width: 6em;
+	padding-right: 1em;
+}
+.journal_issues DL {
+	width: 100%;
+	margin: 2px 0;
+	clear: both;
+}
+.journal_issues DL DT {
+	float: left;
+}
+.journal_issues DL DT {
+	width: 7em;
+}
+.journal_issues DL DD {
+	margin: 0 0 0 7em;
+}
+.journal_issues UL {
+	list-style-type: none;
+}
+.journal_issues UL LI {
+	display: inline-block;
+	margin: 1px;
+}
+.journal_issues UL A {
+	display: inline-block;
+	min-width: 1.8em;
+	padding: 0 3px;
+	text-decoration: none;
+	text-align: center;
+	border: 1px solid gray;
+}
