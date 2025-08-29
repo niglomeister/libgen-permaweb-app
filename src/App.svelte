@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+  import { format_book_tx, search_books_graphql, search_books_ao, get_random_docs } from "./main";
 
 const formatToMimeType = {
   "epub": "application/epub+zip",
@@ -22,12 +23,15 @@ let q = ''
 let criteria = 'title'
 let format = ''
 let language = ''
+let search_engine = 'goldsky'
+
 const update = async () => {
         const params = new URLSearchParams(window.location.search)
         q = params.get('q') || ""
         criteria = params.get('criteria') || 'title'
         format = params.get('format') || ''
         language = params.get('language') || ''
+        search_engine = params.get('search_engine') || 'goldsky'
 
         if (!params.size) return
 
@@ -40,54 +44,31 @@ async function search_books() {
   //e.preventDefault()
   const search_tag = criteria_to_tag[criteria]
   const mime_type = formatToMimeType[format] || ""
+  console.log(language)
 
-  const graphql_query = `{ 
-    transactions(
-        tags: [
-          { name: "App-Name", values: ["Libgen"] },
-          { name: "${search_tag}", values: ["*${q}*"], match : WILDCARD },
-          { name: "Content-Type", values: ["${mime_type}"]},
-        ],
-        first: 100 
-      ) {
-        edges {
-          node {
-            id
-            tags {
-              name
-              value
-            }
-          }
-        }
-        pageInfo {
-          hasNextPage
-        }
-      }
-    }`;
-
-  console.log(graphql_query)
-
-  // Execute the query
-  const res = await fetch('https://arweave-search.goldsky.com//graphql', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query: graphql_query })
-  });
-
-  const resp = await res.json()
-
-  console.log(resp.data.transactions.edges)
-  const t = []
-  for ( const r of resp.data.transactions.edges) {
-    let h = {}
-    h.txid = r.node.id
-    for (let t of r.node.tags) {
-      h[t.name] = t.value
-    }
-    t.push(h)
+  let books = []
+  if (search_engine === 'goldsky')  {
+    books = await search_books_graphql(q, search_tag, mime_type)
   }
-  results = t
+
+  else if (search_engine === 'ao-search') {
+    books = await search_books_ao(q, search_tag, mime_type, language)
+  }
+  else {
+    console.log('Error : the selected sear engine is not supported : ', search_engine)
+  }
+
+  console.log(books)
   
+
+  results = books
+  
+}
+
+async function get_random_books(event) {
+  event.preventDefault()
+  const book_results = await get_random_docs(5)
+  results = book_results
 }
 </script>
 
@@ -142,6 +123,18 @@ async function search_books() {
     <div style="margin:0 0 0.5em 0"><input type="text" name="q" bind:value={q} style="width:93%"> <input type="submit" value="search"></div>
     <ul class="inline-fields">
       <li>
+        <label title="search engine.">Search engine
+          <select name="search_engine" bind:value={search_engine} style="width:8em">
+                    <option value="goldsky">Goldsky</option>
+                    <option value="ao-search">ao-search</option>
+          </select>
+        </label>
+      </li>
+
+
+      {#if search_engine === 'goldsky'}
+      <li>
+          
         <label title="Choose fields to search in.">Search criteria
           <select name="criteria" bind:value={criteria} style="width:5em">
                     <option value="title">title</option>
@@ -150,7 +143,10 @@ async function search_books() {
             
           </select>
         </label>
+
       </li>
+      {/if}
+
       <li>
         <label>Language
           <select name="language" bind:value={language}>
@@ -603,6 +599,16 @@ async function search_books() {
           </select>
         </label>
       </li>
+
+
+      {#if search_engine === 'ao-search'}
+        <li>
+          
+        <button on:click={get_random_books}> I'm feeling lucky ! </button>
+
+      </li>
+      {/if}
+
     </ul>
   </form>
 
@@ -632,7 +638,7 @@ async function search_books() {
         </td>
     <td>{result.Series}</td>
     <td>
-      <p><a href="https://arweave.net/{result.txid}">{result.Title}</a></p>
+      <p><a href="https://arweave.net/{result.id}">{result.Title}</a></p>
       <p class="catalog_identifier">ISBN: {result.ISBN}</p>	</td>
     <td>English</td>
     <td title="Uploaded at 2021-11-03 17:12:20">{result.Extension.toUpperCase()} / {(result.Filesize / 1000000).toFixed(2)}&nbsp;Mb</td>
